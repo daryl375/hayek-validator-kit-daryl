@@ -1,8 +1,8 @@
 {
   "__inputs": [
     {
-      "name": "DS_SWAY_INFLUX",
-      "label": "Sway Influx",
+      "name": "VALIDATOR_INFLUX",
+      "label": "Validator Influx",
       "description": "",
       "type": "datasource",
       "pluginId": "influxdb",
