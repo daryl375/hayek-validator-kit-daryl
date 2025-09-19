@@ -46,7 +46,7 @@ def get_tvc_rank():
     return jsonify(TVC_RANK)
 
 def run_flask_app():
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='127.0.0.1', port=8000)
 
 if __name__ == '__main__':
     fetch_thread = Thread(target=fetch_tvc_rank_loop)
