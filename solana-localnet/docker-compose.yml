@@ -80,6 +80,8 @@ networks:
 
 services:
   gossip-entrypoint:
+    profiles:
+      - localnet
     build:
       context: ./
       target: gossip-entrypoint-builder
@@ -121,6 +123,8 @@ services:
 
   # host-alpha will be hosting a voting non-delinquent validator named Canopy with a bunch of SOL stake
   host-alpha:
+    profiles:
+      - localnet
     build:
       context: ./
       target: validator-builder
@@ -135,6 +139,8 @@ services:
 
   # host-bravo is a validator-ready container without a validator key set. It does not have any validator running, but the tooling is already installed.
   host-bravo:
+    profiles:
+      - localnet
     # NO NEED TO BUILD, because we want to use the image `${COMPOSE_PROJECT_NAME}-validator`
     # specified in *validator-variables and by now that image should be already built for host-alpha.
     # build:
@@ -152,6 +158,8 @@ services:
 
   # host-charlie is a naked Ubuntu 24.04. This guy is not ready for anything. This is good to test bare-bone provisioning scripts.
   host-charlie:
+    profiles:
+      - localnet
     build:
       context: ./
       target: naked-builder
@@ -205,11 +213,6 @@ services:
       context: ./
       target: ansible-control-builder
     image: ${COMPOSE_PROJECT_NAME}-ansible-control
-    depends_on:
-      - gossip-entrypoint
-      - host-alpha
-      - host-bravo
-      - host-charlie
     container_name: ansible-control
     stdin_open: true
     tty: true
@@ -223,7 +226,6 @@ services:
       - FOO="bar"
       - RPC_URL=http://gossip-entrypoint:8899
       - SSH_AUTH_SOCK=/ssh-agent
-    network_mode: "container:gossip-entrypoint"
 
   host-monitoring:
     profiles:
