@@ -1,0 +1,27 @@
+---
+# monitoring_hub role main tasks
+
+# TODO: Add task to acquire SSL certificate for secure Grafana access
+#       - Implement Let's Encrypt or custom certificate management
+#       - Configure HTTPS for Grafana web interface
+#       - Update firewall rules for HTTPS (port 443)
+
+- name: Load sensitive variables
+  include_vars: secrets.yml
+  no_log: true
+
+- name: Include monitoring hub installation tasks
+  include_tasks: install.yml
+
+- name: Include firewall configuration tasks
+  include_tasks: config_firewall.yml
+
+- name: Include monitoring hub configuration tasks
+  include_tasks: configure.yml
+
+- name: Include Grafana tasks
+  include_tasks: grafana/main.yml
+
+- name: Include InfluxDB tasks
+  include_tasks: influxdb/main.yml
+  
